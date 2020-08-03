@@ -16,6 +16,7 @@ import jp.kobe_u.cs.daikibo.tsubuyaki.service.TsubuyakiService;
 public class TsubuyakiController {
     @Autowired
     TsubuyakiService ts;
+    String word;
 
     //タイトル画面を表示
     @GetMapping("/")
@@ -28,8 +29,10 @@ public class TsubuyakiController {
     @GetMapping("/read")
     String showTsubuyakiList(Model model) {
         List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
+        List<Tsubuyaki> commlist = ts.findTsubuyaki("a"); //全つぶやきを取得
 
-        model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
+        model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット
+        model.addAttribute("findList", commlist);   //モデル属性にリストをセット  
         model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
 
         return "tsubuyaki_list"; //リスト画面を返す  
@@ -40,12 +43,14 @@ public class TsubuyakiController {
     String postTsubuyaki(@ModelAttribute("tsubuyakiForm") TsubuyakiForm form, Model model) {  
         //フォームからエンティティに移し替え
         Tsubuyaki t = new Tsubuyaki();
+        word = form.getWord();
 
         t.setName(form.getName());
         t.setComment(form.getComment());
-  
+
         //サービスに投稿処理を依頼
-        ts.postTsubuyaki(t);
+        if(form.getComment() != null)
+            ts.postTsubuyaki(t);
         return "redirect:/read"; //メイン画面に転送
     }
 
