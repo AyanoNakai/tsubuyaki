@@ -29,10 +29,14 @@ public class TsubuyakiController {
     @GetMapping("/read")
     String showTsubuyakiList(Model model) {
         List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
-        List<Tsubuyaki> commlist = ts.findTsubuyaki("a"); //全つぶやきを取得
-
-        model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット
-        model.addAttribute("findList", commlist);   //モデル属性にリストをセット  
+        if(word == null){
+            model.addAttribute("findList", null);
+        }else{
+            List<Tsubuyaki> commlist = ts.findTsubuyaki(word);
+            model.addAttribute("findList", commlist);
+        }
+        //model.addAttribute("findList", list);
+        model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
         model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
 
         return "tsubuyaki_list"; //リスト画面を返す  
