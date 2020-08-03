@@ -35,7 +35,6 @@ public class TsubuyakiController {
             List<Tsubuyaki> commlist = ts.findTsubuyaki(word);
             model.addAttribute("findList", commlist);
         }
-        //model.addAttribute("findList", list);
         model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
         model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
 
