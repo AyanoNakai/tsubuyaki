@@ -23,24 +23,6 @@ public class TsubuyakiController {
         return "index";
     }
 
-  
-    //メイン画面を表示
-   /* @GetMapping("/search")
-    String showTsubuyakiList(Model model) {
-        
-        List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
-        if(word == null){
-            model.addAttribute("findList", null);
-        }else{
-            List<Tsubuyaki> commlist = ts.findTsubuyaki(word);
-            model.addAttribute("findList", commlist);
-        }
-        model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
-        model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
-
-        return "Tsubuyaki_list"; //リスト画面を返す  
-    }*/
-
     //メイン画面を表示
     @GetMapping("/read")
     String showFindList(Model model) {
