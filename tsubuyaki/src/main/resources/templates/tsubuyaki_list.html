@@ -14,13 +14,6 @@
         </li>
     </ul>  
 
-    <h1>検索つぶやき</h1>
-    <ul>
-        <li th:each="t: ${findList}">
-            [[${t.comment}]] -- [[${t.name}]] on [[${t.createdAt}]]
-        </li>
-    </ul>  
-
     <h2>検索する</h2>
     <form th:action=@{/search} th:object=${tsubuyakiForm} method="post">
         <label for="comment">つぶやき：</label>
