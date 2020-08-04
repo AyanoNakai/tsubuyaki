@@ -16,7 +16,6 @@ import jp.kobe_u.cs.daikibo.tsubuyaki.service.TsubuyakiService;
 public class TsubuyakiController {
     @Autowired
     TsubuyakiService ts;
-    String word;
 
     //タイトル画面を表示
     @GetMapping("/")
@@ -26,8 +25,9 @@ public class TsubuyakiController {
 
   
     //メイン画面を表示
-    @GetMapping("/read")
+   /* @GetMapping("/search")
     String showTsubuyakiList(Model model) {
+        
         List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
         if(word == null){
             model.addAttribute("findList", null);
@@ -35,11 +35,21 @@ public class TsubuyakiController {
             List<Tsubuyaki> commlist = ts.findTsubuyaki(word);
             model.addAttribute("findList", commlist);
         }
-        //model.addAttribute("findList", list);
         model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
         model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
 
-        return "tsubuyaki_list"; //リスト画面を返す  
+        return "Tsubuyaki_list"; //リスト画面を返す  
+    }*/
+
+    //メイン画面を表示
+    @GetMapping("/read")
+    String showFindList(Model model) {
+        List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
+        
+        model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
+        model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
+
+        return "Tsubuyaki_list"; //リスト画面を返す  
     }
 
     //つぶやきを投稿
@@ -47,7 +57,6 @@ public class TsubuyakiController {
     String postTsubuyaki(@ModelAttribute("tsubuyakiForm") TsubuyakiForm form, Model model) {  
         //フォームからエンティティに移し替え
         Tsubuyaki t = new Tsubuyaki();
-        word = form.getWord();
 
         t.setName(form.getName());
         t.setComment(form.getComment());
@@ -56,6 +65,17 @@ public class TsubuyakiController {
         if(form.getComment() != null)
             ts.postTsubuyaki(t);
         return "redirect:/read"; //メイン画面に転送
+    }
+    //つぶやきを検索
+    @PostMapping("/search")
+    String postSearch(@ModelAttribute("tsubuyakiForm") TsubuyakiForm form, Model model) {  
+        //フォームからエンティティに移し替え
+        //Tsubuyaki t = new Tsubuyaki();
+        String word = form.getWord();
+        List<Tsubuyaki> commlist = ts.findTsubuyaki(word);
+        model.addAttribute("findList", commlist);
+
+        return "find_list"; //検索結果を表示
     }
 
   
