@@ -67,7 +67,7 @@ public class TsubuyakiController {
         return "redirect:/read"; //メイン画面に転送
     }
     //つぶやきを検索
-    @PostMapping("/search")
+    @GetMapping("/search")
     String postSearch(@ModelAttribute("tsubuyakiForm") TsubuyakiForm form, Model model) {  
         //フォームからエンティティに移し替え
         //Tsubuyaki t = new Tsubuyaki();
