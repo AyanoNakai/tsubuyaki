@@ -48,6 +48,7 @@ public class TsubuyakiController {
         
         model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット  
         model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
+        model.addAttribute("searchForm", new SearchForm());  //空フォームをセット
 
         return "Tsubuyaki_list"; //リスト画面を返す  
     }
@@ -68,7 +69,7 @@ public class TsubuyakiController {
     }
     //つぶやきを検索
     @GetMapping("/search")
-    String postSearch(@ModelAttribute("tsubuyakiForm") TsubuyakiForm form, Model model) {  
+    String getSearch(@ModelAttribute("serchForm") SearchForm form, Model model) {  
         //フォームからエンティティに移し替え
         //Tsubuyaki t = new Tsubuyaki();
         String word = form.getWord();
